@@ -75,15 +75,15 @@ f5-hotel/
 - **Body:**
 ```json
 {
-  "firstName": "John",
-  "middleName": "M",
-  "lastName": "Doe",
-  "dateOfBirth": "1990-01-01",
-  "email": "john@example.com",
-  "contactNumber": "1234567890",
-  "username": "johndoe",
-  "password": "password123"
+    "firstName": "Admin",
+    "lastName": "User",
+    "dateOfBirth": "1990-01-01",
+    "email": "admin@gmail.com",
+    "contactNumber": "09123456789",
+    "username": "AdminUser",
+    "password": "admin12345"
 }
+
 ```
 - **Response:**
 ```json
@@ -100,9 +100,9 @@ f5-hotel/
 - **Body:**
 ```json
 {
-  "email": "john@example.com",
-  "username": "johndoe",
-  "password": "password123"
+    "email": "admin@gmail.com",
+    "username": "AdminUser",
+    "password": "admin12345"
 }
 ```
 - **Response:**
@@ -115,8 +115,8 @@ f5-hotel/
 }
 ```
 
-#### 3. Get User Profile
-- **URL:** `GET /api/auth/profile`
+#### 3. Get All Users
+- **URL:** `GET /api/auth/users`
 - **Headers:** `Authorization: Bearer <token>`
 - **Response:** User profile data
 
