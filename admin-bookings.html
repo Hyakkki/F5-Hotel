@@ -715,6 +715,7 @@
                             <th>Check-In</th>
                             <th>Check-Out</th>
                             <th>Guests</th>
+                            <th>Rooms</th>
                             <th>Total</th>
                             <th>Status</th>
                             <th>Reserved Date</th>
@@ -748,6 +749,7 @@
                         <td>${formatDate(booking.checkInDate || booking.checkIn)}</td>
                         <td>${formatDate(booking.checkOutDate || booking.checkOut)}</td>
                         <td>${booking.numberOfGuests || booking.guests}</td>
+                        <td><strong>${booking.numberOfRooms || 1}</strong></td>
                         <td>₱${(booking.totalPrice || booking.total).toLocaleString()}</td>
                         <td>${statusTag}</td>
                         <td>${formatDate(booking.createdAt || booking.bookingDate)}</td>

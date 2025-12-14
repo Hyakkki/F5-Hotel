@@ -428,7 +428,8 @@
             const token = localStorage.getItem('adminAuthToken');
 
             try {
-                const response = await fetch('/api/auth/users', {
+                // Fetch users data
+                const usersResponse = await fetch('/api/auth/users', {
                     method: 'GET',
                     headers: {
                         'Authorization': 'Bearer ' + token,
@@ -436,14 +437,41 @@
                     }
                 });
 
-                const data = await response.json();
+                const usersData = await usersResponse.json();
 
-                if (response.ok && data.success) {
-                    const totalUsers = data.users.length;
-                    const totalAdmins = data.users.filter(u => u.isAdmin).length;
+                if (usersResponse.ok && usersData.success) {
+                    const totalUsers = usersData.users.length;
+                    const totalAdmins = usersData.users.filter(u => u.isAdmin).length;
                     
                     document.getElementById('totalUsers').textContent = totalUsers;
                     document.getElementById('totalAdmins').textContent = totalAdmins;
+                }
+
+                // Fetch bookings data
+                const bookingsResponse = await fetch('/api/bookings/all', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': 'Bearer ' + token,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const bookingsData = await bookingsResponse.json();
+
+                if (bookingsResponse.ok && bookingsData.success) {
+                    // Count only confirmed bookings
+                    const confirmedBookings = bookingsData.bookings.filter(b => b.status === 'Confirmed').length;
+                    document.getElementById('totalBookings').textContent = confirmedBookings;
+                    
+                    // Calculate total rooms booked (sum of numberOfRooms from confirmed bookings)
+                    const totalRoomsBooked = bookingsData.bookings
+                        .filter(b => b.status === 'Confirmed')
+                        .reduce((sum, booking) => sum + booking.numberOfRooms, 0);
+                    
+                    // Calculate available rooms (50 total - total rooms booked)
+                    const totalRooms = 50;
+                    const availableRooms = totalRooms - totalRoomsBooked;
+                    document.getElementById('availableRooms').textContent = availableRooms;
                 }
             } catch (error) {
                 console.error('Error fetching stats:', error);
